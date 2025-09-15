@@ -5,10 +5,14 @@ export function createTree(element, data) {
     return element;
   }
 
-  const ul = document.createElement('ul');
-
   const keys =
     typeof data === 'object' && data !== null ? Object.keys(data) : [];
+
+  if (keys.length === 0) {
+    return element;
+  }
+
+  const ul = document.createElement('ul');
 
   for (const key of keys) {
     const li = document.createElement('li');
@@ -20,6 +24,7 @@ export function createTree(element, data) {
     if (
       typeof value === 'object' &&
       value !== null &&
+      !Array.isArray(value) &&
       Object.keys(value).length > 0
     ) {
       createTree(li, value);
